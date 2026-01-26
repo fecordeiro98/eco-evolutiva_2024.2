@@ -5,10 +5,10 @@
 
 # Introdução --------------------------------------------------------------
 
-#### Diretório de trabalho ####
+## Diretório de trabalho ----
 setwd('./Ecologia evolutiva')
 
-#### Bibliotecas ####
+## Bibliotecas ----
 if(!require('ggplot2')) {
   install.packages('ggplot2')
 }
@@ -22,20 +22,20 @@ if(!require('readr')) {
   install.packages('readr')
 }
 
-#### Importação dos dados ####
+## Importação dos dados ----
 dados <- read.csv('./Resultados_Reduzido.csv', sep = ';')
 
-##### Escolaridade - Religião #####
+### Escolaridade - Religião ----
 grupo <- select(dados, Escolaridade, Religiao_1, Religiao_2, Religiao_3, Religiao_4, Religiao_5)
 
-##### Dados de escolaridade #####
+### Dados de escolaridade ----
 escolaridade <- grupo |>
   count(Escolaridade) |>
   mutate(
     Porcentagem = n / sum(n) * 100
   )
 
-#### Criação do gráfico ####
+## Criação do gráfico ----
 ggplot(escolaridade, aes(Escolaridade, Porcentagem)) +
   geom_col(fill = c('darkred', 'orange', 'darkgreen', 'darkblue')) +
   geom_text(aes(
@@ -46,7 +46,7 @@ ggplot(escolaridade, aes(Escolaridade, Porcentagem)) +
   theme_bw() +
   labs(title = 'Escolaridade')
 
-##### Salvando o gráfico #####
+### Salvando o gráfico ----
 ggsave(
   './gráficos/escolaridade.png',
   height = 9,
@@ -57,7 +57,7 @@ ggsave(
 
 # Perguntas ---------------------------------------------------------------
 
-#### Criação da função para fazer a contagem das respostas por pergunta ####
+## Criação da função para fazer a contagem das respostas por pergunta ----
 perguntas <- function(coluna, número) {
   temp1 <- grupo |> 
     filter({{coluna}} %in% c('Sim', 'Nao'))
@@ -86,13 +86,13 @@ perguntas <- function(coluna, número) {
   )
 }
 
-##### Execução da função #####
+### Execução da função ----
 perguntas(Religiao_1, 1)
 perguntas(Religiao_2, 2)
 perguntas(Religiao_3, 3)
 perguntas(Religiao_4, 4)
 
-#### Criação do gráfico 5 ####
+## Criação do gráfico 5 ----
 religiao5 <- grupo |>
   count(Religiao_5) |>
   mutate(Porcentagem = n / sum(n) * 100)
@@ -119,7 +119,7 @@ ggsave(
 
 # Religião x Escolaridade -------------------------------------------------
 
-#### Criação da função de repetição ####
+## Criação da função de repetição ----
 gráficos <- function(coluna, número) {
   temp <- grupo |>
     filter({{coluna}} %in% c('Sim', 'Nao'))
@@ -142,13 +142,13 @@ gráficos <- function(coluna, número) {
   )
 }
 
-##### Chamada da função #####
+### Chamada da função ----
 gráficos(Religiao_1, 1)
 gráficos(Religiao_2, 2)
 gráficos(Religiao_3, 3)
 gráficos(Religiao_4, 4)
 
-#### Gráfico 5 ####
+## Gráfico 5 ----
 ggplot(grupo, aes(Religiao_5, fill = Religiao_5)) +
   geom_bar(show.legend = FALSE) +
   scale_fill_manual(values = c('darkred', 'gold', 'darkblue')) +
@@ -170,7 +170,7 @@ ggsave(
 
 # Tabelas -----------------------------------------------------------------
 
-#### Criação da função ####
+## Criação da função ----
 tabelas <- function(coluna, número) {
   filtro <- grupo |> filter({{coluna}} %in% c('Sim', 'Nao'))
   tabela <- table(filtro[,{{número}}], filtro$Escolaridade)
@@ -178,13 +178,13 @@ tabelas <- function(coluna, número) {
   chisq.test(tabela)
 }
 
-##### Execução da função #####
+### Execução da função ----
 tabelas(Religiao_1, 2)
 tabelas(Religiao_2, 3)
 tabelas(Religiao_3, 4)
 tabelas(Religiao_4, 5)
 
-#### Tabela 5 ####
+## Tabela 5 ----
 t5 <- table(grupo$Religiao_5, grupo$Escolaridade)
 prop.table(t5, 2) * 100
 chisq.test(t5)
