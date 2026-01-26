@@ -75,10 +75,10 @@ perguntas <- function(coluna, numero) {
     labs(
       x = 'Respostas',
       y = 'Porcentagem',
-      title = paste('Pergunta', {{numero}}, 'sobre religião')
+      title = paste('Pergunta', numero, 'sobre religião')
     )
   ggsave(
-    paste0('./gráficos/religiao', {{numero}}, '.png'),
+    paste0('./gráficos/religiao', numero, '.png'),
     height = 9,
     width = 16,
     dpi = 300,
@@ -129,12 +129,12 @@ graficos <- function(coluna, numero) {
     labs(
       x = 'Resposta',
       y = 'Número de entrevistados',
-      title = paste('Religião', {{numero}}, 'x Escolaridade')
+      title = paste('Religião', numero, 'x Escolaridade')
     ) +
     facet_grid(cols = vars(Escolaridade)) +
     theme_bw()
   ggsave(
-    paste0('./gráficos/rel-esc', {{numero}}, '.png'),
+    paste0('./gráficos/rel-esc', numero, '.png'),
     height = 9,
     width = 16,
     dpi = 300,
@@ -194,4 +194,3 @@ chisq.test(t5)
 
 # Se P < 0.05, a escolaridade afeta a religiao
 # Se P > 0.05, a escolaridade nao afeta a religiao
-
