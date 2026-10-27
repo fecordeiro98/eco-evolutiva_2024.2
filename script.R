@@ -9,21 +9,13 @@
 setwd('./Ecologia evolutiva')
 
 ## Bibliotecas ----
-if(!require('ggplot2')) {
-  install.packages('ggplot2')
-}
-if(!require('dplyr')) {
-  install.packages('dplyr')
-}
-if(!require('scales')) {
-  install.packages('scales')
-}
-if(!require('readr')) {
-  install.packages('readr')
-}
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(scales)
 
 ## Importacao dos dados ----
-dados <- read.csv('./Resultados_Reduzido.csv', sep = ';')
+dados <- read.csv('resultados_reduzido.csv', header = T, sep = ',')
 
 ### Escolaridade - Religiao ----
 grupo <- select(dados, Escolaridade, Religiao_1, Religiao_2, Religiao_3, Religiao_4, Religiao_5)
